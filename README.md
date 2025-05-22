@@ -3,32 +3,35 @@
 ## プロジェクト構成
 ```
 .                                       # プロジェクトルート
-├── sensors/                             # センサー関連
-│   ├── __init__.py                     # 初期化
-│   ├── camera.py                       # RealSense取得，マーカーとの距離
-│   ├── imu.py                          # imu_callback用
-│   ├── mtx.npy
-│   └── dist.npy
+├── sensors/                            # センサー関連
+│   ├── __init__.py                     
+│   ├── camera.py                       # CameraHandler 画角にマーカーあるか判断，マーカーとの距離取得
+│   ├── imu.py                          # imu_callback用（yaw取得）
+│   ├── realsense.py                    # realsense初期化，深度画像・カメラ画像取得
+│   ├── illuminance.py                  # illuminanceSensor初期化，照度チェック
+│   ├── mtx.npy                         # realsenseパラメータ
+│   └── dist.npy                        # realsenseパラメータ
 │
 ├── config/                             # 定数や状態変数をまとめる
 │   ├── constant.py                     # 定数 (MARKER_SIZE, カメラ設定など)
-│   └── state.py                        # 状態変数 (角度, 閾値, フラグなど)
+│   └── state.py                        # 状態変数 (角度, 閾値，モーター出力値など)
 │
 ├── motion/                             # 動作関連
-│   ├── control.py                      # 動作（前進，後進，左右旋回，ストップ，角度旋回）
-│   └── marker_navigation.py            # _find_34(), decide_direction_turn()
+│   ├── control.py                      # オーダーに対するモーター制御関数，turn_theta
+│   └── order.py                        # Queueへのorder用関数
+│
+├── save_img/                           # 画像保存用
+│   ├── __init__.py                     
+│   └──  caputure.py                    # 画像保存（フレーム，保存先ディレクトリ）
 │
 ├── vision/                             
 │   ├── __init__.py                     # 初期化
-│   ├── caputure.py                     # 画像保存
 │   ├── distance.py                     # マーカーとの距離チェック
 │   └── grayscale_drawer.py             # グレースケール
 │
-├── station/
+├── state/
 │   ├── __init__.py
-│   └── docking.py                      # station_detect
+│   └── transision.py                   # 初期状態決定用
 │
-├── main.py
-├── RealSense.py
-├── IlluminanceSensor.py
+├── main.py                             # main
 ```
