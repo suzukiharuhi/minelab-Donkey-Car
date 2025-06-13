@@ -3,7 +3,7 @@
 ## プロジェクト構成
 ```
 .                                       # プロジェクトルート
-├── charge/                             # 自動充電機能
+├── charge/
 │   ├── __init__.py                     
 │   └── draw_p.py                       # 目標点Pの描画
 │
@@ -33,4 +33,6 @@
 │   └── transision.py                   # 初期状態決定用
 │
 ├── main.py                             # main
+├── mtx.npy                             # realsenseパラメータ
+└── dist.npy                            # realsenseパラメータ
 ```
