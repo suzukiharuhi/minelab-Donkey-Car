@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <arg name="fcu_url" default="/dev/ttyS0:115200" />
+
+  <node pkg="mavros" type="mavros_node" name="mavros" clear_params="true" output="screen">
+    <param name="fcu_url" value="$(arg fcu_url)" />
+    <param name="system_id" value="255" />
+    <param name="component_id" value="240" />
+    <param name="timesync_mode" value="10"/>
+ 
+    <!-- load blacklist, config -->
+    <rosparam command="load" file="$(find mavros)/launch/apm_pluginlists.yaml" />
+    <rosparam command="load" file="$(find hard_lecture)/config/apm_config.yaml" /> 
+  </node>
+  
+  <include file="$(find realsense2_camera)/launch/rs_camera.launch">
+    <!-- 必要であれば解像度やfpsも指定 -->
+    <!-- <arg name="depth_width" value="640"/>
+    <arg name="depth_height" value="360"/>
+    <arg name="depth_fps" value="15"/> -->
+  </include>
+
+  <node name="node_a" pkg="rospackage_test" type="node_a.py" output="screen"/>
+  <node name="node_b" pkg="rospackage_test" type="node_b.py" output="screen"/>
+  <!-- RealSenseカメラノードをインクルード -->
+
+
+</launch>
