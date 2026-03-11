@@ -1,0 +1,37 @@
+# minelab/config/camera.yaml
+# RealSense D400-series configuration used by depth_feature_node and
+# marker_detection_node.
+
+# Horizontal field-of-view of the depth camera [degrees]
+hfov_deg: 69.0
+
+# Depth ROI (fraction of image height)
+roi_top_ratio:    0.30
+roi_bottom_ratio: 0.70
+
+# Depth validity range [metres]
+min_valid_depth_m: 0.10
+max_valid_depth_m: 5.00
+
+# Obstacle-proximity threshold for FTG-i free-space mask [metres]
+obstacle_dist_m: 0.80
+
+# Minimum gap width to consider navigable [pixels]
+min_gap_width_px: 20
+
+# Whether to publish debug images (set True during development)
+publish_debug: false
+
+# ArUco detector settings
+aruco:
+  dictionary: DICT_4X4_50
+  default_marker_size_m: 0.07
+  id_size_map:
+    0:  0.07
+    3:  0.07
+    4:  0.07
+    10: 0.15
+    20: 0.15
+    21: 0.15
+  smooth_alpha: 0.20
+  camera_offset_x_cm: 3.0

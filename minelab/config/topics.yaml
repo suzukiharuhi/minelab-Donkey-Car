@@ -1,0 +1,21 @@
+# minelab/config/topics.yaml
+# Central topic-name registry for the minelab UGV system.
+# Edit here to remap topics without touching node source files.
+
+# Sensor inputs (from hardware drivers)
+camera:
+  color: /camera/color/image_raw
+  depth: /camera/depth/image_rect_raw
+
+imu: /mavros/imu/data
+battery: /mavros/battery
+
+# Intermediate minelab topics
+depth_features: /minelab/depth_features
+depth_debug:    /minelab/depth_debug
+marker_info:    /minelab/marker_info
+pilot_status:   /minelab/pilot_status
+
+# Control topics
+control_command: /control/command
+rc_override:     /mavros/rc/override

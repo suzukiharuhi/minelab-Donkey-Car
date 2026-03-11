@@ -1,0 +1,32 @@
+# minelab/config/pilot.yaml
+# Pilot-node configuration.
+
+# Control loop rate [Hz]
+loop_hz: 50
+
+# Safety-guard timeouts
+depth_timeout_s:  1.0    # STOP if depth_features older than this
+marker_timeout_s: ~      # null = disabled (marker visibility is optional)
+
+# Session label for logging
+session_tag: field_run
+
+# State-machine initial state
+initial_state: IDLE
+
+# CropNavigationState steering angle thresholds [degrees]
+steer_thresh_small_deg:  5.0
+steer_thresh_large_deg: 15.0
+
+# Marker IDs
+end_of_row_marker_id:    10
+charging_marker_id:      20
+
+# ApproachMarkerState
+approach_stop_distance_cm:  40.0
+approach_lateral_thresh_cm:  5.0
+
+# DockingState
+docking_stop_distance_cm:   15.0
+docking_align_lateral_cm:    3.0
+docking_align_yaw_deg:       5.0

@@ -1,0 +1,46 @@
+<launch>
+  <!--
+    sensing.launch
+    ~~~~~~~~~~~~~~
+    Starts the two perception nodes that produce minelab intermediate topics:
+      /minelab/depth_features  (DepthFeatureNode)
+      /minelab/marker_info     (MarkerDetectionNode)
+
+    Usage:
+      roslaunch ros_ugv sensing.launch
+  -->
+
+  <arg name="pkg"               default="ros_ugv" />
+  <arg name="depth_topic"       default="/camera/depth/image_rect_raw" />
+  <arg name="color_topic"       default="/camera/color/image_raw" />
+  <arg name="target_marker_id"  default="-1" />
+  <arg name="publish_debug"     default="false" />
+
+  <!-- Depth-feature extraction node -->
+  <node
+    pkg="$(arg pkg)"
+    type="minelab/nodes/depth_feature_node.py"
+    name="depth_feature_node"
+    output="screen"
+  >
+    <param name="depth_topic"      value="$(arg depth_topic)" />
+    <param name="features_topic"   value="/minelab/depth_features" />
+    <param name="debug_image_topic" value="/minelab/depth_debug" />
+    <param name="publish_debug"    value="$(arg publish_debug)" />
+    <rosparam file="$(find ros_ugv)/minelab/config/camera.yaml" command="load" />
+  </node>
+
+  <!-- ArUco marker detection node -->
+  <node
+    pkg="$(arg pkg)"
+    type="minelab/nodes/marker_detection_node.py"
+    name="marker_detection_node"
+    output="screen"
+  >
+    <param name="color_topic"        value="$(arg color_topic)" />
+    <param name="marker_topic"       value="/minelab/marker_info" />
+    <param name="target_marker_id"   value="$(arg target_marker_id)" />
+    <param name="estimate_pose"      value="true" />
+  </node>
+
+</launch>

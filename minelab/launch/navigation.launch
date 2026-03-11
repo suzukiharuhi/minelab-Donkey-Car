@@ -1,0 +1,47 @@
+<launch>
+  <!--
+    navigation.launch
+    ~~~~~~~~~~~~~~~~~
+    Starts the pilot node (state machine + command generation) and the
+    vehicle I/O node (RC override to Pixhawk).
+
+    Prerequisites: sensing.launch must be running (or topic remapping
+    adjusted accordingly).
+
+    Usage:
+      roslaunch ros_ugv navigation.launch
+  -->
+
+  <arg name="pkg"          default="ros_ugv" />
+  <arg name="loop_hz"      default="50" />
+  <arg name="session_tag"  default="field_run" />
+
+  <!-- Pilot node -->
+  <node
+    pkg="$(arg pkg)"
+    type="minelab/nodes/pilot_node.py"
+    name="minelab_pilot_node"
+    output="screen"
+  >
+    <param name="loop_hz"             value="$(arg loop_hz)" />
+    <param name="control_topic"       value="/control/command" />
+    <param name="imu_topic"           value="/mavros/imu/data" />
+    <param name="depth_features_topic" value="/minelab/depth_features" />
+    <param name="marker_info_topic"   value="/minelab/marker_info" />
+    <param name="session_tag"         value="$(arg session_tag)" />
+    <rosparam file="$(find ros_ugv)/minelab/config/pilot.yaml" command="load" />
+  </node>
+
+  <!-- Vehicle I/O node -->
+  <node
+    pkg="$(arg pkg)"
+    type="minelab/nodes/vehicle_io_node.py"
+    name="minelab_vehicle_io_node"
+    output="screen"
+  >
+    <param name="control_topic"    value="/control/command" />
+    <param name="rc_override_topic" value="/mavros/rc/override" />
+    <param name="loop_hz"          value="$(arg loop_hz)" />
+  </node>
+
+</launch>

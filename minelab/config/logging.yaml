@@ -1,0 +1,16 @@
+# minelab/config/logging.yaml
+# SessionLogger / LoggerNode configuration.
+
+# Root directory for session logs
+log_root: /home/pi/ugv_ws/minelab_logs
+
+# Whether to write metrics.csv alongside events.jsonl
+save_csv: true
+
+# Print each record to stderr (disable on the robot for performance)
+verbose: false
+
+# Image saving (currently only in ImageLogger – not wired by default)
+save_images: false
+image_format: jpg        # jpg or png
+image_quality: 85        # 0–100 (JPEG quality)
