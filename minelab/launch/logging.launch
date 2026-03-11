@@ -1,0 +1,32 @@
+<launch>
+  <!--
+    logging.launch
+    ~~~~~~~~~~~~~~
+    Starts the logger node that subscribes to all minelab JSON topics
+    and persists records to disk.
+
+    Usage:
+      roslaunch ros_ugv logging.launch
+  -->
+
+  <arg name="pkg"          default="ros_ugv" />
+  <arg name="log_root"     default="/home/pi/ugv_ws/minelab_logs" />
+  <arg name="session_tag"  default="field_run" />
+  <arg name="verbose"      default="false" />
+
+  <node
+    pkg="$(arg pkg)"
+    type="minelab/nodes/logger_node.py"
+    name="minelab_logger_node"
+    output="screen"
+  >
+    <param name="log_root"            value="$(arg log_root)" />
+    <param name="session_tag"         value="$(arg session_tag)" />
+    <param name="verbose"             value="$(arg verbose)" />
+    <param name="depth_features_topic" value="/minelab/depth_features" />
+    <param name="marker_info_topic"   value="/minelab/marker_info" />
+    <param name="pilot_status_topic"  value="/minelab/pilot_status" />
+    <rosparam file="$(find ros_ugv)/minelab/config/logging.yaml" command="load" />
+  </node>
+
+</launch>
